@@ -37,4 +37,3 @@ export function findCostOfLineBreaks(wordLengths: Array<number>, maxSum: number)
   return costOfRest(0)
 }
 
-

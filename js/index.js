@@ -1,5 +1,6 @@
 
 require('babel-register')
 
-require('./findlinebreaksTest')
+// require('./findlinebreaksTest')
+require('./projectPickerTest')
 
