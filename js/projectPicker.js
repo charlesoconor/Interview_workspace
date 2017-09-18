@@ -11,7 +11,7 @@ type Project = {
   endDate: number,
   value: number
 }
-export function pickProjects(projects: Array<Project>): { value: number, Array<string> } {
+export function pickProjects(projects: Array<Project>): { value: number, projectIds: Array<string> } {
   const sortedProjects = _.sortBy(projects, 'startDate')
 
   const cachedValues = []
@@ -34,7 +34,7 @@ export function pickProjects(projects: Array<Project>): { value: number, Array<s
         const altProj = sortedProjects[i]
         if (altProj.startDate > curProj.endDate) break
 
-        alternavives.push(getValueAfterDate(-Infinity, i))
+        alternavives.push(getValueAfterDate(altProj.startDate - 1, i))
       }
 
       return Math.max(... alternavives)

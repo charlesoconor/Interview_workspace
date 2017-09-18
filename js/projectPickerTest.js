@@ -31,7 +31,7 @@ describe('Testing Line breaks', function () {
     ].map(([id, startDate, endDate, value]) => ({ id, startDate, endDate, value}))
 
     const maxValue = pickProjects(input)
-    chai.assert.equal(5, maxValue)
+    chai.assert.equal(40, maxValue)
 
     done()
   })
@@ -166,7 +166,7 @@ describe('Testing Line breaks', function () {
     ].map(([id, startDate, endDate, value]) => ({ id, startDate, endDate, value}))
 
     const maxValue = pickProjects(input)
-    chai.assert.equal(5, maxValue)
+    chai.assert.equal(512.19, maxValue)
 
     done()
   })
