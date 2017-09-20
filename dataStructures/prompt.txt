@@ -1,0 +1,13 @@
+I'll make it easy for today (mostly because I didn't get a chance to prepare). Two parts:
+1. Read up on the following data structures and algorithms. Make sure you can explain how they work in plain English, practice in front of mirror if necessary, or find a buddy:
+- Dijkstra's algorithm
+- Quick sort
+- Merge sort
+- MST finding algorithms
+- Heaps
+- Prefix trees
+- Binary search trees (and what balancing means. Don't need to know specific balancing schemes)
+- Hash maps (hash functions, collision handling, rehashing, amortized complexity)
+2. Write code (on paper!) for the following: 
+- A heap
+- Merge two sorted lists

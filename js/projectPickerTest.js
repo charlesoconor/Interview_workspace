@@ -4,7 +4,7 @@
 import chai from 'chai'
 import { pickProjects } from './projectPicker'
 
-describe('Testing Line breaks', function () {
+describe('Find best projects to do', function () {
   it('simple test no overlaps', function(done) {
     const input =  [
       // [id, start, end, value]

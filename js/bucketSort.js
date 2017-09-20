@@ -22,6 +22,8 @@ function bucketing(bucketArr, numBuckets) {
     const relaventArr = groupedBuckets.slice(prefix)
     if (numBuckets = 1) {
       return
+    } else if (!relaventArr.length) {
+      return
     }
 
   }

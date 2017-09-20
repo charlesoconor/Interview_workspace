@@ -1,0 +1,26 @@
+Imagine you live in a district that is a 40 by 40 grid. All the east-west streets are oneway streets going east (positive X direction), and all the north-south streets are oneway going north (positive Y direction). You live at (0, 0), and you want to visit a friend at (39, 39).
+
+  (0, 39)                  (39, 39)
+     _________________________
+    |       _____|            |
+    | BLUE |                  |
+    |    __|                  |
+    |   |                     |
+    |   |                     |
+    |___|                     |
+    |                       __|
+    |                  ____|  |
+    |                 |       |
+    |            _____|  RED  |
+    |___________|_____________|
+   (0, 0)                    (39, 0)
+
+Unfortunately the two candidates for the next mayoral election are holding rallies today, key issue being this mess of oneway streets. The candidate from the blue team has taken over the northwest corner (around (0, 39)), promising that he will turn all the odd-numbered streets the other way to facilitate traffic, taking much care to point out that his opponent’s plan will bring about the end of democracy, not only in this city, but even the whole country. The candidate from the red team has taken over the southeast corner (around (39, 0)), promising that she will turn all the even-numbered streets the other way, all the while cautioning that her opponent’s plan will be the economic ruin of the entire western civilization.
+
+And you... well, you’re just trying to get to your friend’s house. Given two functions
+  def takenByBlue(x: Int, y: Int): Boolean
+  def takenByRed(x: Int, y: Int): Boolean
+
+That returns whether that particular intersection has been closed off for the rally, find a route from (0, 0) to (39, 39) that makes the fewest turns (ugh, don’t even get me started on the traffic lights in this town).
+
+For simplicity, you may assume that the border of each rally area is monotone in both directions. That is, if an intersection is taken by the blue team, all intersections to its north and west are also taken. If an intersection is not taken by the blue team, all intersections to its east and south are also not taken. Symmetric assumptions can be made about the red team’s area.
