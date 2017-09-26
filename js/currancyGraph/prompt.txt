@@ -1,0 +1,21 @@
+Today's question: 
+
+Suppose you have an enum of currencies:
+
+  enum Currency { USD, GBP, EUR, CNY, ... }
+
+and of course a way to enumerate all of them:
+
+  def allCurrencies: Set[Currency]
+  
+and a marketplace:
+
+  def getQuote(youHave: Currency, howMuch: Double, youWant: Currency): Double
+  
+with the result being all the fees and such deducted. Also assume that the market is sane, so that if you do a sequence of exchanges and end up back at the currency you started, you would always end up with less money.
+
+Implement this function:
+
+  def optimize(youHave: Currency, howMuch: Double, youWant: Currency): Seq[Currency]
+  
+Such that the returned sequence gives you the optimal amount in the currency you want
