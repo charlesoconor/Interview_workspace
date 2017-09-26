@@ -1,0 +1,9 @@
+Using an oldie (but a goodie) today:
+Two numbers are said to form an amicable pair if the sum of the proper divisors (all divisors except itself) of one number equals the other (and vice versa). For example, the smallest  amicable pair (and their proper divisors) is:
+220: 1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110
+284: 1, 2, 4, 71, 142
+
+If you add up the divisors of 220, you get 284. If you do the same for 284, you get 220. Given integer N, find all amicable pairs such that both numbers are < N.
+
+Brute-force gets you around n^2 or n^3 time complexity (depending on how brutish you are). Try to aim for n^(3/2), and yes there is an n log n solution.
+I highly recommend actually writing the solution out on paper, there are a number of edge cases that one would not expect just by reading the question.
