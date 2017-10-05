@@ -1,6 +1,6 @@
 /*
  * main.cpp
- * Copyright (C) 2017-10-04 17:11 charlesoconor <coconor@umicheight.edu>
+ * Copyright (C) 2017-10-04 17:11 charlesoconor <coconor@umich.edu>
  *
  *
  */
@@ -56,15 +56,14 @@ void printPoints(const vector<Point>& points) {
 }
 
 static vector<Point> findSkyLine(vector<Building> buildings) {
+  priority_queue<Building> currentBuildingsByHeight;
+  vector<Point> output;
 
-  sort(buildings.begin(), buildings.end(), [](Building b1, Building b2) {
+  sort(buildings.begin(), buildings.end(), [](const Building& b1, const Building& b2) {
       return b1.start != b2.start ?
         b1.start < b2.start :
         b1.height > b2.height;
     });
-
-  priority_queue<Building> currentBuildingsByHeight;
-  vector<Point> output;
 
   int lastHeight = 0;
   auto it = buildings.cbegin();
@@ -92,11 +91,13 @@ static vector<Point> findSkyLine(vector<Building> buildings) {
     lastHeight = newHeight;
   }
 
-  int curEnd = currentBuildingsByHeight.top().end;
   // clear the queue
   while (!currentBuildingsByHeight.empty()) {
-    const Building& oldBuilding = currentBuildingsByHeight.top();
-    currentBuildingsByHeight.pop();
+    Building oldBuilding = currentBuildingsByHeight.top();
+
+    do {
+      currentBuildingsByHeight.pop();
+    } while (!currentBuildingsByHeight.empty() && currentBuildingsByHeight.top().end <= oldBuilding.end);
 
     int newHeight = !currentBuildingsByHeight.empty() ? currentBuildingsByHeight.top().height : 0;
 
@@ -119,8 +120,6 @@ int main(/* int argc, char** argv */) {
 
   vector<Building> buildings(tupleB.size());
   transform(tupleB.begin(), tupleB.end(), buildings.begin(), [](building_t b) { return Building(b); });
-
-  /* printBuilds(buildings); */
 
   vector<Point> skyline = findSkyLine(buildings);
 
