@@ -6,4 +6,5 @@ require('./projectPickerTest')
 // require('./findClosetPoints/findClosetPointsTest')
 require('./amicablePairs/amicablePairsTest')
 require('./currancyGraph/currancyGraphTest')
+require('./compressString/compressStringTest')
 
