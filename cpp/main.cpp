@@ -12,6 +12,7 @@
 #include <tuple>
 #include <algorithm>    // std::sort
 #include <queue>        // std::priority_queue
+#include <utility>      // std::pair, std::make_pair
 
 using namespace std;
 // start, e, height
@@ -24,6 +25,7 @@ struct Building {
 
   Building(): start(0), end(0), height(0)  {}
   Building(const building_t& b): start(get<0>(b)), end(get<1>(b)), height(get<2>(b))  {}
+  Building(const vector<int>& v): start(v[0]), end(v[1]), height(v[2])  {}
 
   bool operator<(const Building& b) const {
     return height < b.height;
@@ -47,6 +49,10 @@ struct Point {
 
   void print() const {
     printf("x: %d, y: %d\n", x, y);
+  }
+
+  pair<int, int> toPair() const {
+    return make_pair(x, y);
   }
 };
 
@@ -72,13 +78,22 @@ static vector<Point> findSkyLine(vector<Building> buildings) {
     const Building& b = *it;
 
     do {
-      it->print();
       currentBuildingsByHeight.push(*it);
     } while (++it != buildings.cend() && b.start == it->start);
 
-    while (!currentBuildingsByHeight.empty()
-        && currentBuildingsByHeight.top().end <= b.start)
-      currentBuildingsByHeight.pop();
+    while (!currentBuildingsByHeight.empty() && currentBuildingsByHeight.top().end <= b.start) {
+      const Building oldTop = currentBuildingsByHeight.top();
+
+      do {
+        currentBuildingsByHeight.pop();
+      } while (currentBuildingsByHeight.top().end < oldTop.end);
+
+      if (currentBuildingsByHeight.top().end < b.start) {
+        const int x = currentBuildingsByHeight.top().end;
+        output.push_back(Point(x, lastHeight));
+        output.push_back(Point(x, 0));
+      }
+    }
 
     int newHeight = currentBuildingsByHeight.top().height;
 
@@ -108,14 +123,36 @@ static vector<Point> findSkyLine(vector<Building> buildings) {
   return output;
 }
 
+class Solution {
+  public:
+    vector<pair<int, int>> getSkyline(vector<vector<int>>& buildingsIn) {
+      vector<Building> buildings(buildingsIn.size());
+      transform(buildingsIn.begin(), buildingsIn.end(), buildings.begin(), [](const vector<int>& b) { return Building(b); });
+
+      vector<Point> points = findSkyLine(buildings);
+      vector<pair<int, int>> pairs(points.size());
+
+      transform(points.begin(), points.end(), pairs.begin(), [](const Point& p) { return p.toPair(); });
+
+      return pairs;
+    }
+};
+
 int main(/* int argc, char** argv */) {
+  /* vector<building_t> tupleB = { */
+  /*   /1* {1, 1, 1}, *1/ */
+  /*   /1* {1, 2, 2} *1/ */
+  /*   {3, 4, 1}, */
+  /*   {1, 3, 5}, */
+  /*   {2, 5, 9}, */
+  /*   {4, 6, 3} */
+  /* }; */
   vector<building_t> tupleB = {
-    /* {1, 1, 1}, */
-    /* {1, 2, 2} */
-    {3, 4, 1},
-    {1, 3, 5},
-    {2, 5, 9},
-    {4, 6, 3}
+    {2,9,10},
+    {3,7,15},
+    {5,12,12},
+    {15,20,10},
+    {19,24,8}
   };
 
   vector<Building> buildings(tupleB.size());
