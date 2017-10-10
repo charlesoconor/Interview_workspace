@@ -10,32 +10,36 @@
 #include <map>
 #include <cassert>
 
+#include <iostream>
+
 class LRUCache {
   private:
     struct Node {
-      Node* next;
-      Node* prev;
-      int key;
-      int data;
+      Node* next = nullptr;
+      Node* prev = nullptr;
+      int key = 0;
+      int data = 0;
     };
 
   public:
-    LRUCache(const int capacity) {
+    LRUCache(const int capacityIn): capacity(capacityIn) {
       Node* head = new Node();
       Node* curNode = head;
 
-      for (int i = 1; i < capacity; ++i) {
+      for (size_t i = 1; i < capacity; ++i) {
         Node* nextNode = new Node();
         curNode->next = nextNode;
         nextNode->prev = curNode;
+        curNode = nextNode;
       }
 
       head->prev = curNode;
+      curNode->next = head;
       toEvict = head;
     }
 
     ~LRUCache() {
-      toEvict->prev = nullptr;
+      toEvict->prev->next = nullptr;
 
       while (toEvict) {
         Node* const next = toEvict->next;
@@ -45,22 +49,26 @@ class LRUCache {
     }
 
     int get(const int key) {
-      Node* const node = lookup[key];
+      auto nodeIt = lookup.find(key);
 
-      if (!node) return -1;
-      makeMostResentlyUsed(node);
+      if (nodeIt == lookup.end()) return -1;
 
-      return node->data;
+      makeMostResentlyUsed(nodeIt->second);
+      return nodeIt->second->data;
     }
 
     void put(const int key, const int value) {
-      Node* const node = lookup[key];
-      if (node) {
+      auto nodeIt = lookup.find(key);
+
+      if (nodeIt != lookup.end()) {
+        Node* const node = nodeIt->second;
         assert(key == node->key);
         node->data = value;
         makeMostResentlyUsed(node);
       } else {
-        lookup.erase(toEvict->key);
+        if (lookup.size() >= capacity)
+          lookup.erase(toEvict->key);
+
         toEvict->key = key;
         toEvict->data = value;
         lookup[key] = toEvict;
@@ -70,7 +78,13 @@ class LRUCache {
 
   private:
     int makeMostResentlyUsed(Node* const node) {
-      if (node == toEvict) return 0;
+      if (toEvict->prev == node)
+        return 1;
+
+      if (node == toEvict) {
+        toEvict = toEvict->next;
+        return 0;
+      }
 
       node->prev->next = node->next;
       node->next->prev = node->prev;
@@ -82,6 +96,17 @@ class LRUCache {
       return -1;
     }
 
+    void printChain() {
+      const Node* curNode = toEvict;
+      do {
+        std::cout << "k: " << curNode->key << " d:" << curNode->data << " | ";
+        curNode = curNode->next;
+      } while (curNode != toEvict);
+
+      std::cout << std::endl;
+    }
+
+    const size_t capacity;
     Node* toEvict;
     std::map<int, Node*> lookup;
 };

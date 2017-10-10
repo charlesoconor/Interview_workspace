@@ -7,8 +7,7 @@
 CC=c++
 CFLAGS=-std=c++11 -g
 
-all:
-	@echo "Makefile needs your attention"
+all: main
 
 main: main.cpp lru_cache.h
 	$(CC) $(CFLAGS) main.cpp -o main.exe

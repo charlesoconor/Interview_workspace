@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <exception>
 
 #include "lru_cache.h"
 
@@ -16,8 +17,11 @@ int main(/* int argc, char** argv */){
 
   LRUCache cache = LRUCache(2);
   int output = -2;
-  auto check = [output](const int toCheck) {
-    assert(output == toCheck);
+  auto check = [&output](const int toCheck) {
+    if (output != toCheck) {
+      printf("%d should be %d\n", output, toCheck);
+      throw runtime_error("fuck");
+    }
   };
 
   cache.put(1, 1);
