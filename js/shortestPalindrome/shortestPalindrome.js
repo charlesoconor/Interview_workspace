@@ -5,12 +5,12 @@
  */
 function shortestPalindrome(str) {
   function isPallendrom(start, end) {
+    console.log(start, end);
     const length = Math.floor((end - start)/ 2)
     for (let i = 0; i <= length; ++i) {
       if (str[start + i] !== str[end - i])
         return false
     }
-
     return true
   }
 
@@ -21,15 +21,6 @@ function shortestPalindrome(str) {
       break
     }
   }
-
-
-  let lengthRightPalindrome = 0
-  // for (let i = 0; i < str.length - 1; ++i) {
-  //   if (isPallendrom(i, str.length - 1)) {
-  //     lengthRightPalindrome = str.length - i
-  //     break
-  //   }
-  // }
 
   function padd(start, end) {
     if (start == end)
@@ -46,13 +37,8 @@ function shortestPalindrome(str) {
       str + toAdd
   }
 
-  // if (Math.max(lengthRightPalindrome, lengthLeftPalindrome) > 0) {
-   if (lengthLeftPalindrome > 0) {
-    // if (lengthRightPalindrome > lengthLeftPalindrome)
-      // return padd(0, str.length - lengthRightPalindrome)
-
+   if (lengthLeftPalindrome > 0)
     return padd(lengthLeftPalindrome + 1, str.length)
-  }
 
   return padd(1, str.length)
 }
@@ -65,7 +51,7 @@ function test(input, expected) {
 
 var input = new Array(40004).fill('a').join('')
 test(input, input)
-test('abb', 'bbabb')
-test('aba', 'aba')
-test('abcd', 'dcbabcd')
-test('aacecaaa', 'aaacecaaa')
+// test('abb', 'bbabb')
+// test('aba', 'aba')
+// test('abcd', 'dcbabcd')
+// test('aacecaaa', 'aaacecaaa')
