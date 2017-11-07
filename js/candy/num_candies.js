@@ -3,16 +3,7 @@
  * Copyright (C) 2017-10-11 18:00 charlesoconor <coconor@umich.edu>
  *
  */
-function getMaxAndIndex(arr) {
-  return arr.reduce((acc, cur, idx) => {
-    if (acc.max < cur)
-      return { max: cur, idx: idx + 1 }
-
-    return acc
-  }, { idx: -1, max: -Infinity })
-}
-
-function maxNumber(num1, num2, k) {
+function numCandies(rating) {
   function recuse(num1, num2, k) {
     if (k === 0) return []
 

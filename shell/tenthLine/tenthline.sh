@@ -5,5 +5,4 @@
 #
 #
 
-
-head -n 10 $1 | tail -n 1
+head -n 10 ${1:file.txt} <(echo -e '\n') | tail -n 1
